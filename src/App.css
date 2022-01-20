@@ -1,0 +1,27 @@
+/* Main App Styles */
+.App {
+    width: 90vw;
+    margin: auto;
+}
+.companyListContainer {
+    background-color: aliceblue;
+}
+
+
+/* Company Compnent Styles */
+.companyContainer {
+    background-color: white;
+    border-radius: 20px 20px 20px 20px;
+    margin: 40px 0 40px 0;
+}
+
+.titleContainer {
+    display: flex;
+}
+
+.companyName {
+
+}
+.edit {
+    margin-left: 20px;
+}

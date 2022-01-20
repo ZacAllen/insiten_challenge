@@ -1,5 +1,7 @@
 import logo from './logo.svg';
 import React, {Component} from 'react';
+import { Container, Col, Row } from 'react-bootstrap';
+import Company from './Company';
 import './App.css';
 
 class App extends Component {
@@ -8,7 +10,7 @@ class App extends Component {
 
       this.state = {
         isLoading: true,
-        companyData: {}
+        companyData: []
       }
       
     }
@@ -24,14 +26,42 @@ class App extends Component {
       })
       .then(function(companyJSON) {
         console.log(companyJSON);
-        appRef.setState({companyData: companyJSON, isLoading: false})
+        appRef.setState({companyData: companyJSON.companies, isLoading: false})
       });
     }
 
 
     render() {
       return (
-        <div></div>
+        <div className="App justify-content-center">
+            <Container fluid>
+              <Row className="">
+                <Col>
+                  <div className="titleContainer">
+                    <h1 id="title">Company Tracker App</h1>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="">
+                <Col>
+                  <div className="companyListContainer">
+                    <div id="companyList">
+                    {
+                      this.state.isLoading ? (
+                        <div className="loadingMessage text-center">Loading company data...</div>
+                      ) : (
+                        // <div><Company company={this.state.companyData[0]}></Company></div>
+                        this.state.companyData.map(currentCompany => (
+                          <Company company={currentCompany}/>
+                        ))
+                      )
+                    }
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+        </div>
       )
     }
   }
