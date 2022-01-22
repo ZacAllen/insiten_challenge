@@ -1,7 +1,16 @@
 import React, {Component, useState, useEffect, useRef} from 'react';
 import { Container, Col, Row, Button } from 'react-bootstrap';
+import Update from './Update';
 
 const Company = (props) => {
+
+    const [editClicked, showEdit] = useState(false)
+    const [key, setKey] = useState(0);
+
+    const showEditModal = () => {
+        showEdit(true);
+        setKey(key + 1);
+    }
 
     return (
 
@@ -14,7 +23,10 @@ const Company = (props) => {
                                 <Col>
                                     <div className="titleContainer">
                                         <h2 className="companyName">{props.company.name}</h2>
-                                        <Button className="edit">Edit</Button>
+                                        <Button className="edit" onClick={() => showEditModal()}>Edit</Button>
+                                        {
+                                            editClicked ? (<Update showModal={true} key={key} company={props.company} updateList={props.updateList}/>) : null
+                                        }
                                     </div>
                                 </Col>
                             </Row>

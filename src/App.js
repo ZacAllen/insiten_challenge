@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import React, {Component} from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
+import axios from 'axios';
 import Company from './Company';
+import Create from './Create';
 import './App.css';
 
 class App extends Component {
@@ -18,16 +20,17 @@ class App extends Component {
       this.getCompanyData()
     }
 
-    getCompanyData = () => {
-      let appRef = this;
-      fetch('companyData.json').then(function(response) {
-        console.log(response);
-        return response.json();
-      })
-      .then(function(companyJSON) {
-        console.log(companyJSON);
-        appRef.setState({companyData: companyJSON.companies, isLoading: false})
-      });
+    getCompanyData = async() => {
+      console.log('updatinglist')
+      const response = await axios.get('https://61e9f12e7bc0550017bc64f1.mockapi.io/api/companies')
+        .catch(function(error) {
+          if (error.response) {
+            console.log(error.response.data);
+          }
+        });
+        if (response) {
+          this.setState({companyData: response.data, isLoading: false})
+        }
     }
 
 
@@ -45,6 +48,7 @@ class App extends Component {
               <Row className="">
                 <Col>
                   <div className="companyListContainer">
+                    <Create updateList={this.getCompanyData}></Create>
                     <div id="companyList">
                     {
                       this.state.isLoading ? (
@@ -52,7 +56,7 @@ class App extends Component {
                       ) : (
                         // <div><Company company={this.state.companyData[0]}></Company></div>
                         this.state.companyData.map(currentCompany => (
-                          <Company company={currentCompany}/>
+                          <Company company={currentCompany} updateList={this.getCompanyData}/>
                         ))
                       )
                     }
