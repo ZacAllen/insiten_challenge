@@ -1,15 +1,35 @@
 import React, {Component, useState, useEffect, useRef} from 'react';
-import { Container, Col, Row, Button } from 'react-bootstrap';
+import { Container, Col, Row, Button, Dropdown } from 'react-bootstrap';
 import Update from './Update';
+import axios from 'axios';
 
 const Company = (props) => {
 
     const [editClicked, showEdit] = useState(false)
     const [key, setKey] = useState(0);
+    const [id, setID] = useState(0)
 
     const showEditModal = () => {
         showEdit(true);
         setKey(key + 1);
+    }
+
+    useEffect(() => { 
+        setID(props.company.id);    
+        console.log("component id:" + id);
+    });
+
+    const deleteCompany = () => {
+        console.log("deleting component with id:" + id)
+        axios.delete(`https://61e9f12e7bc0550017bc64f1.mockapi.io/api/companies/${id}`)
+        .catch(function(error) {
+            if (error.response) {
+                console.log(error.response.data);
+            }
+        }).then(function() {
+            props.updateList();
+        })
+          
     }
 
     return (
@@ -39,9 +59,19 @@ const Company = (props) => {
                             </Row>
                             <Row>
                                 <Col>
-                                    <div className="contactsContainer">
-                                        {/* change to dropdown later */}
-                                        <p className="companyContacts">{props.company.contacts.toString()}</p>
+                                    <div className="contactsContainer">                   
+                                        <Dropdown>
+                                            <Dropdown.Toggle id="dropdown-basic">
+                                                View Contacts
+                                            </Dropdown.Toggle>
+
+                                            <Dropdown.Menu>
+                                                <Dropdown.Item>{props.company.contacts[0].name + ": " + props.company.contacts[0].phone}</Dropdown.Item>
+                                                <Dropdown.Item>{props.company.contacts[1].name + ": " + props.company.contacts[1].phone}</Dropdown.Item>
+                                                <Dropdown.Item>{props.company.contacts[2].name + ": " + props.company.contacts[2].phone}</Dropdown.Item>
+                                            </Dropdown.Menu>
+                                        </Dropdown>
+
                                     </div>
                                 </Col>
                             </Row>
@@ -66,8 +96,7 @@ const Company = (props) => {
                             <Row>
                                 <Col>
                                     <div className="delteContainer">
-                                        {/* change to dropdown later */}
-                                        <Button className="delete">Delete</Button>
+                                        <Button className="delete" onClick={() => deleteCompany(id)}>Delete</Button>
                                     </div>
                                 </Col>
                             </Row>

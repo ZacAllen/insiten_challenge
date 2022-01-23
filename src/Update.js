@@ -94,7 +94,7 @@ const Update = (props) => {
                             <Form.Control type="text" defaultValue={name} onChange={(e) => setName(e.target.value)}/>
                         </Form.Group>
                         <Form.Label>Status</Form.Label>
-                        <Select defaultValue={options[1]} options={options} onChange={(e) => setStatus(e.value)}></Select>
+                        <Select defaultValue={options.find(op => op.value == status)} options={options} onChange={(e) => setStatus(e.value)}></Select>
                         <Form.Group>
                             <Form.Label>Company Info</Form.Label>
                             <Form.Control type="text" defaultValue={info} onChange={(e) => setInfo(e.target.value)}/>
@@ -141,7 +141,7 @@ const Update = (props) => {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="secondary">Close</Button>
+                    <Button variant="secondary" onClick={handleClose}>Close</Button>
                     <Button variant="primary" onClick={saveChanges}>Save changes</Button>
                 </Modal.Footer>
             </Modal>

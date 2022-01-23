@@ -29,6 +29,7 @@ class App extends Component {
           }
         });
         if (response) {
+          console.log(response.data)
           this.setState({companyData: response.data, isLoading: false})
         }
     }
@@ -54,9 +55,9 @@ class App extends Component {
                       this.state.isLoading ? (
                         <div className="loadingMessage text-center">Loading company data...</div>
                       ) : (
-                        // <div><Company company={this.state.companyData[0]}></Company></div>
-                        this.state.companyData.map(currentCompany => (
-                          <Company company={currentCompany} updateList={this.getCompanyData}/>
+                        // <div><Company company={this.state.companyData[0]}></Company></div>     
+                        this.state.companyData.map(currentCompany => (       
+                          <Company company={currentCompany} updateList={this.getCompanyData}/>                 
                         ))
                       )
                     }
