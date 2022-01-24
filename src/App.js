@@ -5,6 +5,7 @@ import axios from 'axios';
 import Company from './Company';
 import Create from './Create';
 import './App.css';
+import ControlledDemo from './ControlledDemo';
 
 class App extends Component {
     constructor(props) {
@@ -49,6 +50,7 @@ class App extends Component {
               <Row className="">
                 <Col>
                   <div className="companyListContainer">
+                  {/* <ControlledDemo></ControlledDemo> */}
                     <Create updateList={this.getCompanyData}></Create>
                     <div id="companyList">
                     {

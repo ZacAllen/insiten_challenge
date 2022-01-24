@@ -1,10 +1,65 @@
+/* CSS Variables */
+:root {
+    --mainButton: #1D809F;
+    --cancelButton: #a8afb3;
+    --mainButtonHover: #cbf8ff;
+    --leftBG: #f0fff5;
+    --titleFont: 'Staatliches', cursive;
+  }
+
 /* Main App Styles */
 .App {
     width: 90vw;
     margin: auto;
 }
+h1 {
+    font-family: var(--titleFont);
+}
+#title {
+    font-size: 64px;
+}
+#companyList {
+    
+}
 .companyListContainer {
-    background-color: aliceblue;
+    background-color: #f0f8ff;
+    padding: 0 0 2% 0;
+}
+.btn-primary.btn-primary {
+    background-color: var(--mainButton);
+    border-radius: 0;
+    margin: 10px 0 10px 0;
+    border: none;
+}
+.btn-primary.btn-primary:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+.btn-check:focus + .btn-primary, .btn-primary:focus {
+    background-color: var(--mainButtonHover) !important;
+    color: var(--mainButton) !important;
+}
+.btn-primary.btn-primary:hover {
+    background-color: var(--mainButtonHover);
+    color: var(--mainButton)
+}
+.btn-check:active + .btn-primary, .btn-check:checked + .btn-primary, .btn-primary.active, .btn-primary:active, .show > .btn-primary.dropdown-toggle {
+    background-color: var(--mainButtonHover) !important;
+    color: var(--mainButton) !important;
+}
+
+
+/* Create Component Styles */
+.createFormContainer {
+    margin: 10px;
+}
+#createForm {
+    display: none;
+    opacity: hidden;
+}
+#cancelCreate {
+    margin-left: 10px;
+    background-color: var(--cancelButton);
 }
 
 
@@ -13,6 +68,12 @@
     background-color: white;
     border-radius: 20px 20px 20px 20px;
     margin: 40px 0 40px 0;
+    box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.315);
+    /* overflow: hidden; */
+}
+
+.companyColLeft {
+    background-color: var(--leftBG);
 }
 
 .titleContainer {
@@ -20,8 +81,21 @@
 }
 
 .companyName {
-
+    margin-top: 2%;
+    font-family: var(--titleFont);
 }
 .edit {
     margin-left: 20px;
+}
+.dropdown-item.dropdown-item {
+    
+}
+.viewContacts {
+    
+}
+
+/* Update Component Styles */
+.closeEdit {
+    background-color: var(--cancelButton) !important;
+    margin-right: 10px !important;
 }

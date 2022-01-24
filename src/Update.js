@@ -141,8 +141,8 @@ const Update = (props) => {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Close</Button>
-                    <Button variant="primary" onClick={saveChanges}>Save changes</Button>
+                    <Button className="closeEdit" onClick={handleClose}>Close</Button>
+                    <Button onClick={saveChanges}>Save changes</Button>
                 </Modal.Footer>
             </Modal>
         </div>

@@ -1,10 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Col, Row, Button, Form, Dropdown } from 'react-bootstrap';
 import Select from 'react-select';
 import axios from 'axios';
+import ReactAnime from 'react-animejs'
+
 
 const Create = (props) => {
 
+    const {Anime, stagger} = ReactAnime
+    const [control, setControl] = useState(null); //controller state
+
+    const [meta, setMeta] = useState({
+        //meta state of the player
+        control: control,
+        progress: 0,
+        currentTime: 0,
+        duration: 0
+    });
+    
     const [name, setName] = useState('');
     const [status, setStatus] = useState('');
     const [info, setInfo] = useState('');
@@ -60,67 +73,109 @@ const Create = (props) => {
             }
         })
         .then(function() {
+            document.getElementById("createForm").style.display = "none";
+            document.getElementById("addCompanyButton").style.display = "inline-block";
+            setControl(["seek", 0])
             update();
         })  
+    }
+    const hideCreate = () => {
+        document.getElementById("createForm").style.display = "none";
+        document.getElementById("addCompanyButton").style.display = "inline-block";
+        setControl(["seek", 0])
+    }
+    const showCreate = () => {
+        document.getElementById("addCompanyButton").style.display = "none";
+        setControl("play");
     }
 
     const update = () => {
         props.updateList();
     }
 
+    
+
     return(
-        <div>
-            <Form>
-                <Form.Group>
-                    <Form.Label>Company Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter name" onChange={(e) => setName(e.target.value)}/>
-                </Form.Group>
-                <Form.Label>Status</Form.Label>
-                <Select options={options} onChange={(e) => setStatus(e.value)}></Select>
-                <Form.Group>
-                    <Form.Label>Company Info</Form.Label>
-                    <Form.Control type="text" placeholder="Enter company info" onChange={(e) => setInfo(e.target.value)}/>
-                </Form.Group>
-                <Row>
-                    <Form.Group as={Col}>
-                        <Form.Label>Contact 1 Name</Form.Label>
-                        <Form.Control onChange={(e) => setContact1(e.target.value)}/>
-                        <Form.Label>Contact 1 Phone</Form.Label>
-                        <Form.Control onChange={(e) => setPhone1(e.target.value)}/>
+        <div className="createFormContainer">
+            <div>
+                <Button id="addCompanyButton" onClick={() => {showCreate()}}>Add New Company</Button>
+            </div>
+            <Anime
+                control={control}
+                setMeta={setMeta}
+                animeConfig={{
+                    autoplay: false,
+                    duration: 200,
+                    easing: 'linear'
+                }}
+                initial={[
+                    {
+                        targets: "#createForm",
+                        translateY: [-20, 0],
+                        begin: function() {
+                            document.getElementById('createForm').style.display = "block";
+                        },
+                        opacity: [0, 1]
+                    },{
+                        //this doesn't work without a second target, empty or not, and I have spent far too long trying to figure out why ¯\_(ツ)_/¯
+                        targets: ""
+                        
+                      }
+                ]}
+            >
+                <Form id="createForm">
+                    <Form.Group>
+                        <Form.Label>Company Name</Form.Label>
+                        <Form.Control type="text" placeholder="Enter name" onChange={(e) => setName(e.target.value)}/>
                     </Form.Group>
-                    <Form.Group as={Col}>
-                        <Form.Label>Contact 2 Name</Form.Label>
-                        <Form.Control onChange={(e) => setContact2(e.target.value)}/>
-                        <Form.Label>Contact 2 Phone</Form.Label>
-                        <Form.Control onChange={(e) => setPhone2(e.target.value)}/>
+                    <Form.Label>Status</Form.Label>
+                    <Select options={options} onChange={(e) => setStatus(e.value)}></Select>
+                    <Form.Group>
+                        <Form.Label>Company Info</Form.Label>
+                        <Form.Control type="text" placeholder="Enter company info" onChange={(e) => setInfo(e.target.value)}/>
                     </Form.Group>
-                    <Form.Group as={Col}>
-                        <Form.Label>Contact 3 Name</Form.Label>
-                        <Form.Control onChange={(e) => setContact3(e.target.value)}/>
-                        <Form.Label>Contact 3 Phone</Form.Label>
-                        <Form.Control onChange={(e) => setPhone3(e.target.value)}/>
-                    </Form.Group>
-                </Row>
-                <Row>
-                    <Form.Group as={Col}>
-                        <Form.Label>Q1 Earnings</Form.Label>
-                        <Form.Control onChange={(e) => setQ1(e.target.value)}/>
-                    </Form.Group>
-                    <Form.Group as={Col}>
-                        <Form.Label>Q2 Earnings</Form.Label>
-                        <Form.Control onChange={(e) => setQ2(e.target.value)}/>
-                    </Form.Group>
-                    <Form.Group as={Col}>
-                        <Form.Label>Q3 Earnings</Form.Label>
-                        <Form.Control onChange={(e) => setQ3(e.target.value)}/>
-                    </Form.Group>
-                    <Form.Group as={Col}>
-                        <Form.Label>Q4 Earnings</Form.Label>
-                        <Form.Control onChange={(e) => setQ4(e.target.value)}/>
-                    </Form.Group>
-                </Row>
-                <Button onClick={createCompany}>Add New</Button>
-            </Form>
+                    <Row>
+                        <Form.Group as={Col}>
+                            <Form.Label>Contact 1 Name</Form.Label>
+                            <Form.Control onChange={(e) => setContact1(e.target.value)}/>
+                            <Form.Label>Contact 1 Phone</Form.Label>
+                            <Form.Control onChange={(e) => setPhone1(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group as={Col}>
+                            <Form.Label>Contact 2 Name</Form.Label>
+                            <Form.Control onChange={(e) => setContact2(e.target.value)}/>
+                            <Form.Label>Contact 2 Phone</Form.Label>
+                            <Form.Control onChange={(e) => setPhone2(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group as={Col}>
+                            <Form.Label>Contact 3 Name</Form.Label>
+                            <Form.Control onChange={(e) => setContact3(e.target.value)}/>
+                            <Form.Label>Contact 3 Phone</Form.Label>
+                            <Form.Control onChange={(e) => setPhone3(e.target.value)}/>
+                        </Form.Group>
+                    </Row>
+                    <Row>
+                        <Form.Group as={Col}>
+                            <Form.Label>Q1 Earnings</Form.Label>
+                            <Form.Control onChange={(e) => setQ1(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group as={Col}>
+                            <Form.Label>Q2 Earnings</Form.Label>
+                            <Form.Control onChange={(e) => setQ2(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group as={Col}>
+                            <Form.Label>Q3 Earnings</Form.Label>
+                            <Form.Control onChange={(e) => setQ3(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group as={Col}>
+                            <Form.Label>Q4 Earnings</Form.Label>
+                            <Form.Control onChange={(e) => setQ4(e.target.value)}/>
+                        </Form.Group>
+                    </Row>
+                    <Button onClick={createCompany}>Add New</Button>
+                    <Button id="cancelCreate" onClick={hideCreate}>Cancel</Button>
+                </Form>
+            </Anime>
         </div>
     )
 }

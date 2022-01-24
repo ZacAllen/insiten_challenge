@@ -1,7 +1,12 @@
-import React, {Component, useState, useEffect, useRef} from 'react';
+import React, {Component, useState, useEffect, useRef, PureComponent} from 'react';
 import { Container, Col, Row, Button, Dropdown } from 'react-bootstrap';
 import Update from './Update';
 import axios from 'axios';
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS } from 'chart.js/auto'
+import { Chart }            from 'react-chartjs-2'
+
+
 
 const Company = (props) => {
 
@@ -16,7 +21,7 @@ const Company = (props) => {
 
     useEffect(() => { 
         setID(props.company.id);    
-        console.log("component id:" + id);
+        console.log('Q1 number? ' + parseInt(props.company.finPerformance.Q1))
     });
 
     const deleteCompany = () => {
@@ -34,16 +39,16 @@ const Company = (props) => {
 
     return (
 
-            <Container fluid style={{overflow: 'auto'}}>
+            <Container fluid >
                 <div className="companyContainer">
                 <Row className="">
-                    <Col lg={8} className="">
+                    <Col lg={6} className="companyColLeft">
                         <Container>
                             <Row>
                                 <Col>
                                     <div className="titleContainer">
                                         <h2 className="companyName">{props.company.name}</h2>
-                                        <Button className="edit" onClick={() => showEditModal()}>Edit</Button>
+                                        <Button className="edit mx-2" onClick={() => showEditModal()}>Edit</Button>
                                         {
                                             editClicked ? (<Update showModal={true} key={key} company={props.company} updateList={props.updateList}/>) : null
                                         }
@@ -57,25 +62,23 @@ const Company = (props) => {
                                     </div>
                                 </Col>
                             </Row>
-                            <Row>
-                                <Col>
-                                    <div className="contactsContainer">                   
-                                        <Dropdown>
-                                            <Dropdown.Toggle id="dropdown-basic">
-                                                View Contacts
-                                            </Dropdown.Toggle>
-
-                                            <Dropdown.Menu>
-                                                <Dropdown.Item>{props.company.contacts[0].name + ": " + props.company.contacts[0].phone}</Dropdown.Item>
-                                                <Dropdown.Item>{props.company.contacts[1].name + ": " + props.company.contacts[1].phone}</Dropdown.Item>
-                                                <Dropdown.Item>{props.company.contacts[2].name + ": " + props.company.contacts[2].phone}</Dropdown.Item>
-                                            </Dropdown.Menu>
-                                        </Dropdown>
-
-                                    </div>
-                                </Col>
-                            </Row>
                         </Container>
+                    </Col>
+                    <Col lg={2}>
+                        <div className="contactsContainer">                   
+                            <Dropdown>
+                                <Dropdown.Toggle className="viewContacts" id="dropdown-basic">
+                                    View Contacts
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu>
+                                    <Dropdown.Item>{props.company.contacts[0].name + ": " + props.company.contacts[0].phone}</Dropdown.Item>
+                                    <Dropdown.Item>{props.company.contacts[1].name + ": " + props.company.contacts[1].phone}</Dropdown.Item>
+                                    <Dropdown.Item>{props.company.contacts[2].name + ": " + props.company.contacts[2].phone}</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+
+                        </div>
                     </Col>
                     <Col lg={4} className="">
                         <Container>
@@ -89,7 +92,34 @@ const Company = (props) => {
                             <Row>
                                 <Col>
                                     <div className="finPerformanceContainer">
-                                        <p className="companyFinPerformance">{props.company.finPerformance.toString()}</p>
+                                        <Bar
+                                        data ={{
+                                            labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                                            datasets: [
+                                                {
+                                                    label: 'Revenue in USD',
+                                                    backgroundColor: '#14636f',
+                                                    borderWidth: 1,
+                                                    data: [parseInt(props.company.finPerformance.Q1), 
+                                                        parseInt(props.company.finPerformance.Q2),
+                                                        parseInt(props.company.finPerformance.Q3),
+                                                        parseInt(props.company.finPerformance.Q4)]
+                                                }
+                                            ]
+                                        }}
+                                        options={{
+                                            title: {
+                                                display: true,
+                                                text: 'Financial Performance per Quarter',
+                                                fontSize: 20
+                                            },
+                                            legend: {
+                                                display: true,
+                                                position: 'right'
+                                            }
+                                        }}
+                                        />
+                                        
                                     </div>
                                 </Col>
                             </Row>
