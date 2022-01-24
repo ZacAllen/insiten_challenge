@@ -62,7 +62,9 @@ class App extends Component {
                     <div id="companyList">
                     {
                       this.state.isLoading ? (
-                        <div className="loadingMessage text-center">Loading company data...</div>
+                        <div className="text-center">
+                          <h2 id="loadingMessage">Loading company data...</h2>
+                        </div>
                       ) : (
                         // <div><Company company={this.state.companyData[0]}></Company></div>     
                         this.state.companyData.filter(company => (company.name.toUpperCase().includes(this.state.searchInput.toUpperCase())))

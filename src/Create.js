@@ -138,7 +138,9 @@ const Create = (props) => {
                       }
                 ]}
             >
+                
                 <Form id="createForm">
+                <h1 id="createTitle">Create New Company</h1>
                     <Form.Group>
                         <Form.Label>Company Name</Form.Label>
                         <Form.Control type="text" placeholder="Enter name" onChange={(e) => setName(e.target.value)}/>

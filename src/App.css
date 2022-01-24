@@ -23,6 +23,10 @@ h1 {
 #title {
     font-size: 64px;
 }
+#loadingMessage {
+    font-family: var(--titleFont);
+    font-size: 2.5em;
+}
 #companyList {
     
 }
@@ -85,6 +89,12 @@ h1 {
 #cancelCreate {
     margin-left: 10px;
     background-color: var(--cancelButton);
+}
+#createTitle {
+    color: var(--mainButton)
+}
+.form-label.form-label {
+    font-family: var(--secondaryFont);
 }
 /* Being completely candid, I did not want to fiddle with react-select's built in styling conventions and now I am regretting it, as it has led me to this: */
 .css-1s2u09g-control.css-1s2u09g-control {
@@ -161,4 +171,16 @@ h1 {
 .closeEdit {
     background-color: var(--cancelButton) !important;
     margin-right: 10px !important;
+}
+.editTitle {
+    font-family: var(--titleFont);
+    font-size: 2em !important;
+}
+.modal-dialog.modal-dialog {
+    max-width: 40%;
+}
+@media screen and (max-width: 500px) {
+    .modal-dialog.modal-dialog {
+        max-width: 100% !important;
+    }
 }

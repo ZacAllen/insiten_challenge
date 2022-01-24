@@ -99,7 +99,7 @@ const Update = (props) => {
         <div>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Edit Company</Modal.Title>
+                    <Modal.Title className="editTitle">Edit Company</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
