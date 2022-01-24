@@ -3,6 +3,7 @@ import { Container, Col, Row, Button, Form, Dropdown } from 'react-bootstrap';
 import Select from 'react-select';
 import axios from 'axios';
 import ReactAnime from 'react-animejs'
+import Swal from 'sweetalert2'
 
 
 const Create = (props) => {
@@ -41,43 +42,57 @@ const Create = (props) => {
     ]
 
     const createCompany = () => {
-        let newCompany = {
-            'name': name,
-            'status': status,
-            'info': info,
-            'contacts': [
-                {
-                    'name': contact1,
-                    'phone': phone1
-                },
-                {
-                    'name': contact2,
-                    'phone': phone2
-                },
-                {
-                    'name': contact3,
-                    'phone': phone3
+
+        if(!/\S/.test(name) || !/\S/.test(contact1) || !/\S/.test(contact2) || !/\S/.test(contact3) || !/\S/.test(phone1) || !/\S/.test(phone2) ||
+            !/\S/.test(phone3) || !/\S/.test(Q1) || !/\S/.test(Q2) || !/\S/.test(Q3) || !/\S/.test(Q4)) {
+                Swal.fire({
+                    customClass: {
+                        confirmButton: 'btn btn-primary mx-2',
+                        text: 'companyInfo'
+                    },
+                    text: "Please fill in all fields!",
+                })
+            } else {
+                let newCompany = {
+                    'name': name,
+                    'status': status,
+                    'info': info,
+                    'contacts': [
+                        {
+                            'name': contact1,
+                            'phone': phone1
+                        },
+                        {
+                            'name': contact2,
+                            'phone': phone2
+                        },
+                        {
+                            'name': contact3,
+                            'phone': phone3
+                        }
+                    ],
+                    'finPerformance': {
+                        'Q1': Q1,
+                        'Q2': Q2,
+                        'Q3': Q3,
+                        'Q4': Q4
+                    }
                 }
-            ],
-            'finPerformance': {
-                'Q1': Q1,
-                'Q2': Q2,
-                'Q3': Q3,
-                'Q4': Q4
+                axios.post('https://61e9f12e7bc0550017bc64f1.mockapi.io/api/companies/', newCompany)
+                .catch(function(error) {
+                    if (error.response) {
+                      console.log(error.response.data);
+                    }
+                })
+                .then(function() {
+                    document.getElementById("createForm").style.display = "none";
+                    document.getElementById("addCompanyButton").style.display = "inline-block";
+                    setControl(["seek", 0])
+                    update();
+                })  
             }
-        }
-        axios.post('https://61e9f12e7bc0550017bc64f1.mockapi.io/api/companies/', newCompany)
-        .catch(function(error) {
-            if (error.response) {
-              console.log(error.response.data);
-            }
-        })
-        .then(function() {
-            document.getElementById("createForm").style.display = "none";
-            document.getElementById("addCompanyButton").style.display = "inline-block";
-            setControl(["seek", 0])
-            update();
-        })  
+
+        
     }
     const hideCreate = () => {
         document.getElementById("createForm").style.display = "none";
@@ -129,7 +144,7 @@ const Create = (props) => {
                         <Form.Control type="text" placeholder="Enter name" onChange={(e) => setName(e.target.value)}/>
                     </Form.Group>
                     <Form.Label>Status</Form.Label>
-                    <Select options={options} onChange={(e) => setStatus(e.value)}></Select>
+                    <Select className="statusSelect" options={options} onChange={(e) => setStatus(e.value)}></Select>
                     <Form.Group>
                         <Form.Label>Company Info</Form.Label>
                         <Form.Control type="text" placeholder="Enter company info" onChange={(e) => setInfo(e.target.value)}/>

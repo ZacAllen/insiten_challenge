@@ -3,14 +3,19 @@
     --mainButton: #1D809F;
     --cancelButton: #a8afb3;
     --mainButtonHover: #cbf8ff;
+    --accentColor: #e39e68;
     --leftBG: #f0fff5;
     --titleFont: 'Staatliches', cursive;
+    --secondaryFont: 'Raleway', sans-serif;
   }
 
 /* Main App Styles */
 .App {
     width: 90vw;
     margin: auto;
+}
+#topSpacer {
+    height: 10vh;
 }
 h1 {
     font-family: var(--titleFont);
@@ -30,6 +35,7 @@ h1 {
     border-radius: 0;
     margin: 10px 0 10px 0;
     border: none;
+    font-family: var(--secondaryFont);
 }
 .btn-primary.btn-primary:focus {
     outline: none !important;
@@ -47,6 +53,25 @@ h1 {
     background-color: var(--mainButtonHover) !important;
     color: var(--mainButton) !important;
 }
+.form-control.form-control {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0) !important;
+    font-family: var(--secondaryFont);
+    border-top: none !important;
+    border-right: none !important; 
+    border-left: 1px solid rgb(0, 0, 0) !important;
+    border-bottom: 1px solid rgb(0, 0, 0) !important;
+}
+.form-control.form-control:focus {
+    box-shadow: none !important;
+    border-left: 1px solid var(--accentColor) !important;
+    border-bottom: 1px solid var(--accentColor) !important;
+    background-color: rgba(203, 248, 255, 0.3) !important;
+}
+.searchBar {
+    width: 70% !important;
+    font-size: 1.5em !important;
+}
 
 
 /* Create Component Styles */
@@ -61,6 +86,23 @@ h1 {
     margin-left: 10px;
     background-color: var(--cancelButton);
 }
+/* Being completely candid, I did not want to fiddle with react-select's built in styling conventions and now I am regretting it, as it has led me to this: */
+.css-1s2u09g-control.css-1s2u09g-control {
+    border-radius: 0;
+    box-shadow: none !important;
+    border-width: 1px !important;
+    border-color: black;
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+.css-1pahdxg-control.css-1pahdxg-control {
+    box-shadow: none !important;
+    border-radius: 0;
+    border-color: var(--accentColor);
+    background-color: rgba(203, 248, 255, 0.3) !important;
+}
+.css-1pahdxg-control.css-1pahdxg-control:hover {
+    border-color: var(--accentColor);
+}
 
 
 /* Company Compnent Styles */
@@ -69,7 +111,7 @@ h1 {
     border-radius: 20px 20px 20px 20px;
     margin: 40px 0 40px 0;
     box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.315);
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
 .companyColLeft {
@@ -84,6 +126,9 @@ h1 {
     margin-top: 2%;
     font-family: var(--titleFont);
 }
+.companyInfo {
+    font-family: var(--secondaryFont);
+}
 .edit {
     margin-left: 20px;
 }
@@ -92,6 +137,24 @@ h1 {
 }
 .viewContacts {
     
+}
+.statusContainer {
+    display: flex;
+}
+.companyStatus {
+    font-family: var(--secondaryFont);
+}
+.statusDot {
+    height: 25px;
+    width: 25px;
+    margin-left: 4%;
+    margin-top: 1%;
+    border-radius: 50%;
+    display: inline-block;
+    border: 3px solid var(--mainButton);
+}
+.delete {
+    float: right;
 }
 
 /* Update Component Styles */

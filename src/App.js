@@ -4,8 +4,8 @@ import { Container, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
 import Company from './Company';
 import Create from './Create';
+import Searchbar from './Searchbar';
 import './App.css';
-import ControlledDemo from './ControlledDemo';
 
 class App extends Component {
     constructor(props) {
@@ -13,7 +13,8 @@ class App extends Component {
 
       this.state = {
         isLoading: true,
-        companyData: []
+        companyData: [],
+        searchInput: ''
       }
       
     }
@@ -35,10 +36,14 @@ class App extends Component {
         }
     }
 
+    setQuery = (queryValue) => {
+      this.setState({searchInput: queryValue})
+    } 
 
     render() {
       return (
         <div className="App justify-content-center">
+          <Container id="topSpacer"></Container>
             <Container fluid>
               <Row className="">
                 <Col>
@@ -50,15 +55,18 @@ class App extends Component {
               <Row className="">
                 <Col>
                   <div className="companyListContainer">
-                  {/* <ControlledDemo></ControlledDemo> */}
                     <Create updateList={this.getCompanyData}></Create>
+                    <div id="searchbarContainer">
+                    <Searchbar onChange={this.setQuery} placeholder={'Search Companies By Name'}></Searchbar>
+                    </div>
                     <div id="companyList">
                     {
                       this.state.isLoading ? (
                         <div className="loadingMessage text-center">Loading company data...</div>
                       ) : (
                         // <div><Company company={this.state.companyData[0]}></Company></div>     
-                        this.state.companyData.map(currentCompany => (       
+                        this.state.companyData.filter(company => (company.name.toUpperCase().includes(this.state.searchInput.toUpperCase())))
+                        .map(currentCompany => (       
                           <Company company={currentCompany} updateList={this.getCompanyData}/>                 
                         ))
                       )

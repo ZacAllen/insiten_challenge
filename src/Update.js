@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Col, Row, Button, Form, Dropdown, Modal } from 'react-bootstrap';
 import Select from 'react-select';
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 const Update = (props) => {
 
@@ -36,11 +37,24 @@ const Update = (props) => {
     });
 
     const saveChanges = () => {
-        handleClose();
-        updateCompany();
+        if(!/\S/.test(name) || !/\S/.test(contact1) || !/\S/.test(contact2) || !/\S/.test(contact3) || !/\S/.test(phone1) || !/\S/.test(phone2) ||
+            !/\S/.test(phone3) || !/\S/.test(Q1) || !/\S/.test(Q2) || !/\S/.test(Q3) || !/\S/.test(Q4)) {
+                Swal.fire({
+                    customClass: {
+                        confirmButton: 'btn btn-primary mx-2',
+                        text: 'companyInfo'
+                    },
+                    text: "Please fill in all fields!",
+                })
+            } else {
+                handleClose();
+                updateCompany();
+            }
+        
     }
 
     const updateCompany = () => {
+        
         let updatedCompany = {
             'name': name,
             'status': status,
