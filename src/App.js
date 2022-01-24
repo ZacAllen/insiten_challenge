@@ -23,7 +23,7 @@ class App extends Component {
     }
 
     getCompanyData = async() => {
-      console.log('updatinglist')
+      // console.log('updatinglist')
       const response = await axios.get('https://61e9f12e7bc0550017bc64f1.mockapi.io/api/companies')
         .catch(function(error) {
           if (error.response) {
@@ -31,7 +31,7 @@ class App extends Component {
           }
         });
         if (response) {
-          console.log(response.data)
+          // console.log(response.data)
           this.setState({companyData: response.data, isLoading: false})
         }
     }

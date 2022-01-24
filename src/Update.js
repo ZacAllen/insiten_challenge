@@ -33,7 +33,7 @@ const Update = (props) => {
     ]
     
     useEffect(() => {     
-        console.log(show);
+        // console.log(show);
     });
 
     const saveChanges = () => {

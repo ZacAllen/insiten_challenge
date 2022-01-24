@@ -68,7 +68,7 @@ const Company = (props) => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("deleting component with id:" + id)
+                // console.log("deleting component with id:" + id)
                 axios.delete(`https://61e9f12e7bc0550017bc64f1.mockapi.io/api/companies/${id}`)
                 .catch(function(error) {
                     if (error.response) {
